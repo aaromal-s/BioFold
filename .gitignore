@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Logs and uploads
+logs/
+temp_uploads/
+backend/logs/
+backend/temp_uploads/
+
+# Node
+node_modules/
+dist/
+build/
+.DS_Store
