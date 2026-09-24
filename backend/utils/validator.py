@@ -5,7 +5,7 @@ from utils.logger import setup_logger
 
 logger = setup_logger(__name__)
 
-ALLOWED_EXTENSIONS = {".csv", ".xlsx", ".xls"}
+ALLOWED_EXTENSIONS = {".csv", ".xlsx", ".xls", ".tsv", ".txt", ".h5", ".h5ad"}
 MAX_FILE_SIZE_MB = 500
 MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
 

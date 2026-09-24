@@ -4,6 +4,7 @@ from flask import Blueprint, request, jsonify, send_file
 from werkzeug.utils import secure_filename
 from engine.data_handler import parse_file
 from engine.manifold_engine import run_reduction
+from algorithms.cluster_engine import apply_clustering
 from utils.logger import setup_logger
 import pandas as pd
 import numpy as np
@@ -68,7 +69,19 @@ def visualize_dataset():
             labels = ["Unlabeled"] * len(df_original)
             logger.info("No label column found, using 'Unlabeled'")
 
-        result_2d, algorithm_used = run_reduction(df_original, algorithm_override)
+        # Instead of single parameter, pass entire body to run_reduction
+        result_2d, algorithm_used = run_reduction(df_original, params=body)
+        
+        # Apply clustering if requested
+        clustering_method = body.get("clustering", "none")
+        if clustering_method != "none":
+            # Run clustering on the 2D results
+            cluster_labels = apply_clustering(result_2d, method=clustering_method, 
+                                              n_clusters=int(body.get("n_clusters", 5)),
+                                              eps=float(body.get("eps", 0.5)))
+            labels = cluster_labels
+            logger.info(f"Applied clustering: {clustering_method}")
+
         elapsed = round(time.time() - start_time, 2)
 
         points = [

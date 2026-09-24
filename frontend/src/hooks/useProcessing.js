@@ -75,7 +75,7 @@ export function useProcessing() {
   }, [updateStep]);
 
   const handleVisualize = useCallback(
-    async (algorithmOverride = null) => {
+    async (params = {}) => {
       if (!currentFilename) {
         setError("Please upload a file first");
         return;
@@ -101,7 +101,7 @@ export function useProcessing() {
         setVisualizeStatus("running");
         const vizResult = await visualizeDataset(
           currentFilename,
-          algorithmOverride
+          params
         );
         if (!vizResult.success) throw new Error(vizResult.error);
 

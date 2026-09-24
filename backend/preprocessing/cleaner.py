@@ -15,12 +15,22 @@ def drop_non_numeric_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def fill_missing_values(df: pd.DataFrame) -> pd.DataFrame:
-    """Fill missing values with the column mean."""
+def fill_missing_values(df: pd.DataFrame, strategy: str = "mean") -> pd.DataFrame:
+    """Fill or drop missing values."""
     missing_before = df.isnull().sum().sum()
     if missing_before > 0:
-        df.fillna(df.mean(), inplace=True)
-        logger.info(f"Filled {missing_before} missing values with column means")
+        if strategy == "mean":
+            df.fillna(df.mean(), inplace=True)
+            logger.info(f"Filled {missing_before} missing values with column means")
+        elif strategy == "median":
+            df.fillna(df.median(), inplace=True)
+            logger.info(f"Filled {missing_before} missing values with column medians")
+        elif strategy == "drop":
+            df.dropna(inplace=True)
+            logger.info(f"Dropped rows with missing values, new shape: {df.shape}")
+        else:
+            df.fillna(df.mean(), inplace=True)
+            logger.info(f"Filled {missing_before} missing values with column means (default fallback)")
     return df
 
 

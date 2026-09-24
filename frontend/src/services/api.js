@@ -66,9 +66,8 @@ export const analyzeDataset = async (filename) => {
  * @param {string} filename
  * @param {string|null} algorithm - optional override ("tsne" | "umap" | "pca_umap" | "pca")
  */
-export const visualizeDataset = async (filename, algorithm = null) => {
-  const payload = { filename };
-  if (algorithm) payload.algorithm = algorithm;
+export const visualizeDataset = async (filename, params = {}) => {
+  const payload = { filename, ...params };
   const response = await api.post("/api/visualize", payload);
   return response.data;
 };

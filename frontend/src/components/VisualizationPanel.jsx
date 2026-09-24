@@ -60,6 +60,13 @@ const VisualizationPanel = ({ status, plotData, onDownload }) => {
       responsive: true,
       displaylogo: false,
       modeBarButtonsToRemove: ["lasso2d", "select2d"],
+      toImageButtonOptions: {
+        format: 'png',
+        filename: 'biomanifold_plot',
+        height: 800,
+        width: 1200,
+        scale: 2 
+      }
     };
 
     return { data: plotDataArray, layout, config };

@@ -9,7 +9,17 @@ import HowItWorks from "../components/HowItWorks";
 import { useProcessing } from "../hooks/useProcessing";
 
 const Visualizer = () => {
-  const [algorithmOverride, setAlgorithmOverride] = useState(null);
+  const [params, setParams] = useState({
+    algorithm: "tsne",
+    imputation: "mean",
+    scaler: "standard",
+    perplexity: 30,
+    n_neighbors: 15,
+    min_dist: 0.1,
+    clustering: "none",
+    n_clusters: 5,
+    eps: 0.5
+  });
   
   const {
     uploadStatus,
@@ -32,7 +42,7 @@ const Visualizer = () => {
   const canRun = uploadStatus === "done" && !isProcessing;
 
   const onRunVisualization = () => {
-    handleVisualize(algorithmOverride);
+    handleVisualize(params);
   };
 
   return (
@@ -60,7 +70,8 @@ const Visualizer = () => {
           <AlgorithmPanel 
             algorithmInfo={algorithmInfo}
             isProcessing={isProcessing}
-            onOverrideChange={setAlgorithmOverride}
+            params={params}
+            setParams={setParams}
           />
           
           <StatusIndicator steps={pipelineSteps} />
