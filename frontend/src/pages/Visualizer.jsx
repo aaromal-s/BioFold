@@ -7,6 +7,8 @@ import StatusIndicator from "../components/StatusIndicator";
 import VisualizationPanel from "../components/VisualizationPanel";
 import HowItWorks from "../components/HowItWorks";
 import { useProcessing } from "../hooks/useProcessing";
+import { saveSession } from "../services/api";
+import { BookmarkIcon } from "@heroicons/react/24/outline";
 
 const Visualizer = () => {
   const [params, setParams] = useState({
@@ -18,8 +20,14 @@ const Visualizer = () => {
     min_dist: 0.1,
     clustering: "none",
     n_clusters: 5,
-    eps: 0.5
+    eps: 0.5,
+    epochs: 50,
+    n_components: 2
   });
+  
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [selectedIndices, setSelectedIndices] = useState(null);
   
   const {
     uploadStatus,
@@ -42,7 +50,34 @@ const Visualizer = () => {
   const canRun = uploadStatus === "done" && !isProcessing;
 
   const onRunVisualization = () => {
-    handleVisualize(params);
+    setSaveSuccess(false);
+    setSelectedIndices(null);
+    handleVisualize({ ...params, selected_indices: [] });
+  };
+
+  const onReAnalyzeLasso = () => {
+    if (!selectedIndices || selectedIndices.length === 0) return;
+    setSaveSuccess(false);
+    handleVisualize({ ...params, selected_indices: selectedIndices });
+  };
+
+  const handleSaveSession = async () => {
+    if (!datasetInfo || !plotData) return;
+    setIsSaving(true);
+    try {
+      await saveSession({
+        name: `Session - ${new Date().toLocaleString()}`,
+        dataset_name: datasetInfo.filename,
+        params: params,
+        processed_file: plotData.processed_filename
+      });
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -96,6 +131,31 @@ const Visualizer = () => {
               </span>
             )}
           </button>
+
+          {plotData && (
+             <div className="flex space-x-2 mt-3">
+               <button
+                 onClick={handleSaveSession}
+                 disabled={isSaving || saveSuccess}
+                 className={`flex-1 text-sm font-medium py-3 rounded-xl flex items-center justify-center transition-all ${
+                   saveSuccess 
+                   ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/50" 
+                   : "bg-slate-800 border border-slate-700 text-slate-300 hover:border-purple-500/50"
+                 }`}
+               >
+                 <BookmarkIcon className="w-4 h-4 mr-2" />
+                 {saveSuccess ? "Saved!" : (isSaving ? "Saving..." : "Save Session")}
+               </button>
+               {selectedIndices && selectedIndices.length > 0 && (
+                 <button
+                   onClick={onReAnalyzeLasso}
+                   className="flex-1 bg-pink-500/20 border border-pink-500/50 text-pink-400 text-sm font-medium py-3 rounded-xl flex items-center justify-center hover:bg-pink-500/30 transition-all"
+                 >
+                   Re-Analyze Selection ({selectedIndices.length})
+                 </button>
+               )}
+             </div>
+          )}
         </div>
 
         {/* Right Column: Output */}
@@ -103,7 +163,8 @@ const Visualizer = () => {
           <VisualizationPanel 
             status={visualizeStatus} 
             plotData={plotData} 
-            onDownload={handleDownload} 
+            onDownload={handleDownload}
+            onSelected={setSelectedIndices}
           />
         </div>
       </div>

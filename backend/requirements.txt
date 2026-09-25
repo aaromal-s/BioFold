@@ -8,3 +8,5 @@ openpyxl
 werkzeug>=3.0.0
 anndata
 h5py
+torch
+Flask-SQLAlchemy

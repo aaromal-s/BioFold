@@ -94,4 +94,20 @@ export const checkHealth = async () => {
   return response.data;
 };
 
+// Session APIs
+export const getSessions = async () => {
+  const response = await api.get("/api/sessions");
+  return response.data;
+};
+
+export const saveSession = async (sessionData) => {
+  const response = await api.post("/api/sessions", sessionData);
+  return response.data;
+};
+
+export const deleteSession = async (id) => {
+  const response = await api.delete(`/api/sessions/${id}`);
+  return response.data;
+};
+
 export default api;

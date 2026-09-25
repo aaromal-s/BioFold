@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 from engine.data_handler import parse_file
 from engine.manifold_engine import run_reduction
 from algorithms.cluster_engine import apply_clustering
+from algorithms.biomarker import compute_feature_importance
 from utils.logger import setup_logger
 import pandas as pd
 import numpy as np
@@ -70,29 +71,41 @@ def visualize_dataset():
             logger.info("No label column found, using 'Unlabeled'")
 
         # Instead of single parameter, pass entire body to run_reduction
-        result_2d, algorithm_used = run_reduction(df_original, params=body)
+        result_nd, algorithm_used, processed_df = run_reduction(df_original, params=body)
         
         # Apply clustering if requested
         clustering_method = body.get("clustering", "none")
+        top_features = []
         if clustering_method != "none":
-            # Run clustering on the 2D results
-            cluster_labels = apply_clustering(result_2d, method=clustering_method, 
+            # Run clustering on the reduced results
+            cluster_labels = apply_clustering(result_nd, method=clustering_method, 
                                               n_clusters=int(body.get("n_clusters", 5)),
                                               eps=float(body.get("eps", 0.5)))
             labels = cluster_labels
             logger.info(f"Applied clustering: {clustering_method}")
+            
+            # Compute feature importances
+            top_features = compute_feature_importance(processed_df, labels)
 
         elapsed = round(time.time() - start_time, 2)
+        n_dims = int(body.get("n_components", 2))
 
-        points = [
-            {"x": float(result_2d[i, 0]), "y": float(result_2d[i, 1]), "label": labels[i]}
-            for i in range(len(result_2d))
-        ]
+        points = []
+        for i in range(len(result_nd)):
+            pt = {
+                "x": float(result_nd[i, 0]),
+                "y": float(result_nd[i, 1]),
+                "label": labels[i]
+            }
+            if n_dims == 3 and result_nd.shape[1] >= 3:
+                pt["z"] = float(result_nd[i, 2])
+            points.push(pt) if hasattr(points, 'push') else points.append(pt)
 
         # Save processed CSV
         processed_filename = f"processed_{filename}"
         processed_path = os.path.join(UPLOAD_FOLDER, processed_filename)
-        proc_df = pd.DataFrame(result_2d, columns=["dim1", "dim2"])
+        col_names = [f"dim{i+1}" for i in range(result_nd.shape[1])]
+        proc_df = pd.DataFrame(result_nd, columns=col_names)
         proc_df["label"] = labels
         proc_df.to_csv(processed_path, index=False)
 
@@ -103,7 +116,9 @@ def visualize_dataset():
                 "algorithm_used": algorithm_used,
                 "n_points": len(points),
                 "elapsed_seconds": elapsed,
-                "processed_filename": processed_filename
+                "processed_filename": processed_filename,
+                "top_features": top_features,
+                "n_components": n_dims
             }
         })
 

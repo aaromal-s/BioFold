@@ -1,10 +1,11 @@
 import React from "react";
-import { SparklesIcon, AdjustmentsHorizontalIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import { SparklesIcon, AdjustmentsHorizontalIcon, ChartBarIcon, CubeIcon } from "@heroicons/react/24/outline";
 
 const ALGORITHMS = [
   { id: "tsne", name: "t-SNE" },
   { id: "umap", name: "UMAP" },
   { id: "isomap", name: "Isomap" },
+  { id: "autoencoder", name: "PyTorch AE" },
   { id: "pca_umap", name: "PCA + UMAP" },
   { id: "pca", name: "Pure PCA" }
 ];
@@ -67,6 +68,29 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
               <option value="none">None</option>
             </select>
           </div>
+        </div>
+      </div>
+
+      {/* Rendering Mode */}
+      <div className="space-y-3 border-t border-slate-700/50 pt-4">
+        <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center">
+          <CubeIcon className="w-4 h-4 mr-1"/> Rendering Mode
+        </h4>
+        <div className="flex space-x-2">
+          {[2, 3].map(dim => (
+             <button
+             key={dim}
+             onClick={() => updateParam("n_components", dim)}
+             disabled={isProcessing}
+             className={`flex-1 p-2 rounded-lg text-sm transition-all border ${
+               params.n_components === dim || (dim === 2 && !params.n_components)
+                 ? "bg-purple-500/20 border-purple-500 text-purple-300"
+                 : "bg-slate-800 border-slate-700 text-slate-400 hover:border-purple-500/50"
+             }`}
+           >
+             {dim}D Projection
+           </button>
+          ))}
         </div>
       </div>
 
@@ -150,6 +174,21 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
                 className="w-full accent-cyan-500"
                 value={params.n_neighbors}
                 onChange={(e) => updateParam("n_neighbors", e.target.value)}
+                disabled={isProcessing}
+              />
+            </div>
+          )}
+          {params.algorithm === "autoencoder" && (
+            <div>
+              <label className="flex justify-between text-xs text-slate-400 mb-2">
+                <span>Training Epochs</span>
+                <span className="text-cyan-400">{params.epochs || 50}</span>
+              </label>
+              <input 
+                type="range" min="10" max="200" step="10" 
+                className="w-full accent-cyan-500"
+                value={params.epochs || 50}
+                onChange={(e) => updateParam("epochs", e.target.value)}
                 disabled={isProcessing}
               />
             </div>

@@ -4,6 +4,8 @@ from flask_cors import CORS
 from routes.upload import upload_bp
 from routes.analyze import analyze_bp
 from routes.visualize import visualize_bp
+from routes.session import session_bp
+from models import db
 from utils.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -12,6 +14,13 @@ def create_app():
     app = Flask(__name__)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+    # Configure SQLite database
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///biofold.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
+    # Initialize DB
+    db.init_app(app)
+
     # Ensure temp upload directory exists
     os.makedirs("temp_uploads", exist_ok=True)
 
@@ -19,6 +28,7 @@ def create_app():
     app.register_blueprint(upload_bp)
     app.register_blueprint(analyze_bp)
     app.register_blueprint(visualize_bp)
+    app.register_blueprint(session_bp)
 
     @app.route("/api/health", methods=["GET"])
     def health():
@@ -39,6 +49,10 @@ def create_app():
     @app.errorhandler(500)
     def server_error(e):
         return jsonify({"success": False, "error": "Internal server error"}), 500
+
+    # Create tables
+    with app.app_context():
+        db.create_all()
 
     return app
 
