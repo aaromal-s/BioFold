@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import Plot from "react-plotly.js";
-import { ArrowDownTrayIcon, PresentationChartLineIcon, MagnifyingGlassPlusIcon } from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, PresentationChartLineIcon } from "@heroicons/react/24/outline";
 
 const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
   // Memoize plot layout and config for performance

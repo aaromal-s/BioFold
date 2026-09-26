@@ -21,4 +21,9 @@ backend/temp_uploads/
 node_modules/
 dist/
 build/
+
+# Database
+instance/
+*.db
+*.sqlite3
 .DS_Store
