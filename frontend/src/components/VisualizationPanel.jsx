@@ -7,7 +7,7 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
   const { data, layout, config, is3D } = useMemo(() => {
     if (!plotData || !plotData.points) return { data: [], layout: {}, config: {}, is3D: false };
 
-    const is3D = plotData.n_components === 3;
+    const is3D = plotData.n_components === 3 && plotData.points.some(p => p.z !== undefined);
 
     // Group points by label for distinct colors/legend entries
     const groups = {};
@@ -119,8 +119,8 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
   if (plotData) {
     return (
       <div className="h-full flex flex-col animate-fade-in">
-        <div className="flex gap-4 flex-grow relative overflow-hidden">
-          <div className="glass-card flex-grow relative p-2 min-h-[500px] group">
+        <div className="flex flex-col xl:flex-row gap-4 flex-grow relative overflow-hidden">
+          <div className="glass-card flex-grow relative p-2 min-h-[500px] lg:min-h-[600px] group">
             
             <div className="absolute top-4 left-4 z-10 bg-slate-900/80 backdrop-blur-md px-4 py-2 rounded-lg border border-slate-700 shadow-lg pointer-events-none">
               <h4 className="text-slate-200 font-semibold flex items-center">
