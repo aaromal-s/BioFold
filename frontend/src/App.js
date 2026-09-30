@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Visualizer from "./pages/Visualizer";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import { checkHealth } from "./services/api";
 import "./styles/main.css";
 
@@ -20,11 +22,16 @@ const Navigation = ({ backendOnline }) => (
         </div>
 
         <div className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="nav-link text-slate-200 hover:text-violet-400 font-medium">Home</Link>
-          <Link to="/visualizer" className="nav-link text-slate-200 hover:text-violet-400 font-medium">Visualizer</Link>
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/visualizer" className="nav-link">Visualizer</Link>
           
-          <div className="flex items-center bg-white/5 px-3 py-1.5 rounded-full border border-white/10 ml-4">
-            <span className="text-xs text-slate-400 mr-2">Backend</span>
+          <div className="flex items-center space-x-4 ml-4 pl-4 border-l border-white/10">
+            <Link to="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Sign In</Link>
+            <Link to="/register" className="text-sm font-medium bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg border border-white/10 transition-all duration-300 hover:scale-105">Get Started</Link>
+          </div>
+
+          <div className="flex items-center bg-white/5 px-3 py-1.5 rounded-full border border-white/10 ml-4 hidden lg:flex">
+            <span className="text-xs text-slate-400 mr-2">API</span>
             <div className="relative flex items-center justify-center">
               {backendOnline ? (
                 <>
@@ -75,6 +82,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/visualizer" element={<Visualizer />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
 
