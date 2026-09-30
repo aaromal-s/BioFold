@@ -9,14 +9,13 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
 
     const is3D = plotData.n_components === 3 && plotData.points.some(p => p.z !== undefined);
 
-    // Group points by label for distinct colors/legend entries
     const groups = {};
-    plotData.points.forEach((p) => {
+    plotData.points.forEach((p, index) => {
       const label = p.label !== undefined && p.label !== "" ? p.label : "Unlabeled";
       if (!groups[label]) {
         const isLarge = plotData.n_points > 5000;
         groups[label] = { 
-          x: [], y: [], z: [], text: [], 
+          x: [], y: [], z: [], text: [], customdata: [],
           type: is3D ? "scatter3d" : (isLarge ? "scattergl" : "scatter"), 
           mode: "markers", name: label, 
           marker: { size: isLarge ? 3 : 6, opacity: 0.8 } 
@@ -28,6 +27,7 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
           groups[label].z.push(p.z);
       }
       groups[label].text.push(`Point: ${p.label}`); // Tooltip text
+      groups[label].customdata.push(index);
     });
 
     const plotDataArray = Object.values(groups);
@@ -144,9 +144,8 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
                   // The point indices are relative to the traces. To get global indices, 
                   // we might need custom logic. For simplicity, we assume we want all points in 'e.points'
                   // We map pointIndex if there's only 1 trace, otherwise we need to store global index in customdata.
-                  // Since we group by label, we will pass global indices using customdata in the future.
-                  // For now, let's just pass the point indices if it's a single trace.
-                  const indices = e.points.map(p => p.pointIndex);
+                  // Since we group by label, we will pass global indices using customdata.
+                  const indices = e.points.map(p => p.customdata);
                   onSelected(indices);
                 }
               }}

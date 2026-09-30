@@ -70,6 +70,11 @@ def visualize_dataset():
             labels = ["Unlabeled"] * len(df_original)
             logger.info("No label column found, using 'Unlabeled'")
 
+        # Subset labels if lasso selection is active
+        selected_indices = body.get("selected_indices")
+        if selected_indices and isinstance(selected_indices, list) and len(selected_indices) > 0:
+            labels = [labels[i] for i in selected_indices]
+
         # Instead of single parameter, pass entire body to run_reduction
         result_nd, algorithm_used, processed_df = run_reduction(df_original, params=body)
         
@@ -99,7 +104,7 @@ def visualize_dataset():
             }
             if n_dims == 3 and result_nd.shape[1] >= 3:
                 pt["z"] = float(result_nd[i, 2])
-            points.push(pt) if hasattr(points, 'push') else points.append(pt)
+            points.append(pt)
 
         # Save processed CSV
         processed_filename = f"processed_{filename}"
