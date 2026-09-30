@@ -20,7 +20,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
       
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium text-slate-200 flex items-center">
+        <h3 className="text-lg font-medium text-slate-100 flex items-center">
           <span className="bg-purple-500/20 text-purple-400 p-1.5 rounded-lg mr-2">
             <SparklesIcon className="w-5 h-5" />
           </span>
@@ -28,15 +28,15 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
         </h3>
         {algorithmInfo && (
           <div className="text-right">
-            <p className="text-sm text-slate-300">
-              Features: <span className="text-cyan-400 font-bold px-2 py-1 bg-cyan-500/10 rounded">{algorithmInfo.n_components_after_preprocessing}</span>
+            <p className="text-sm text-slate-200">
+              Features: <span className="text-violet-400 font-bold px-2 py-1 bg-violet-600 rounded">{algorithmInfo.n_components_after_preprocessing}</span>
             </p>
           </div>
         )}
       </div>
 
       {/* Preprocessing Settings */}
-      <div className="space-y-3 border-t border-slate-700/50 pt-4">
+      <div className="space-y-3 border-t border-white/10 pt-4">
         <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center">
           <AdjustmentsHorizontalIcon className="w-4 h-4 mr-1"/> Preprocessing
         </h4>
@@ -44,7 +44,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
           <div>
             <label className="block text-xs text-slate-500 mb-1">Missing Values</label>
             <select 
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm text-slate-300 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+              className="w-full bg-white/5 border border-white/10 rounded-lg p-2 text-sm text-slate-200 focus:border-violet-500 focus:ring-1 focus:ring-cyan-500"
               value={params.imputation}
               onChange={(e) => updateParam("imputation", e.target.value)}
               disabled={isProcessing}
@@ -57,7 +57,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
           <div>
             <label className="block text-xs text-slate-500 mb-1">Scaling</label>
             <select 
-              className="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm text-slate-300 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+              className="w-full bg-white/5 border border-white/10 rounded-lg p-2 text-sm text-slate-200 focus:border-violet-500 focus:ring-1 focus:ring-cyan-500"
               value={params.scaler}
               onChange={(e) => updateParam("scaler", e.target.value)}
               disabled={isProcessing}
@@ -72,7 +72,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
       </div>
 
       {/* Rendering Mode */}
-      <div className="space-y-3 border-t border-slate-700/50 pt-4">
+      <div className="space-y-3 border-t border-white/10 pt-4">
         <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center">
           <CubeIcon className="w-4 h-4 mr-1"/> Rendering Mode
         </h4>
@@ -85,7 +85,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
              className={`flex-1 p-2 rounded-lg text-sm transition-all border ${
                params.n_components === dim || (dim === 2 && !params.n_components)
                  ? "bg-purple-500/20 border-purple-500 text-purple-300"
-                 : "bg-slate-800 border-slate-700 text-slate-400 hover:border-purple-500/50"
+                 : "bg-white/5 border-white/10 text-slate-400 hover:border-purple-500/50"
              }`}
            >
              {dim}D Projection
@@ -95,7 +95,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
       </div>
 
       {/* Algorithm Settings */}
-      <div className="space-y-3 border-t border-slate-700/50 pt-4">
+      <div className="space-y-3 border-t border-white/10 pt-4">
         <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center">
           <ChartBarIcon className="w-4 h-4 mr-1"/> Reduction Algorithm
         </h4>
@@ -108,7 +108,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
               className={`p-2 rounded-lg text-sm transition-all border ${
                 params.algorithm === algo.id
                   ? "bg-purple-500/20 border-purple-500 text-purple-300"
-                  : "bg-slate-800 border-slate-700 text-slate-400 hover:border-purple-500/50"
+                  : "bg-white/5 border-white/10 text-slate-400 hover:border-purple-500/50"
               }`}
             >
               {algo.name}
@@ -117,12 +117,12 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
         </div>
 
         {/* Dynamic Hyperparameters */}
-        <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700/50 mt-2">
+        <div className="bg-white/5 p-3 rounded-lg border border-white/10 mt-2">
           {params.algorithm === "tsne" && (
             <div>
               <label className="flex justify-between text-xs text-slate-400 mb-2">
                 <span>Perplexity</span>
-                <span className="text-cyan-400">{params.perplexity}</span>
+                <span className="text-violet-400">{params.perplexity}</span>
               </label>
               <input 
                 type="range" min="5" max="50" step="1" 
@@ -138,7 +138,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
               <div>
                 <label className="flex justify-between text-xs text-slate-400 mb-2">
                   <span>Neighbors</span>
-                  <span className="text-cyan-400">{params.n_neighbors}</span>
+                  <span className="text-violet-400">{params.n_neighbors}</span>
                 </label>
                 <input 
                   type="range" min="2" max="100" step="1" 
@@ -151,7 +151,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
               <div>
                 <label className="flex justify-between text-xs text-slate-400 mb-2">
                   <span>Min Distance</span>
-                  <span className="text-cyan-400">{params.min_dist}</span>
+                  <span className="text-violet-400">{params.min_dist}</span>
                 </label>
                 <input 
                   type="range" min="0.0" max="1.0" step="0.1" 
@@ -167,7 +167,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
             <div>
               <label className="flex justify-between text-xs text-slate-400 mb-2">
                 <span>Neighbors</span>
-                <span className="text-cyan-400">{params.n_neighbors}</span>
+                <span className="text-violet-400">{params.n_neighbors}</span>
               </label>
               <input 
                 type="range" min="2" max="100" step="1" 
@@ -182,7 +182,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
             <div>
               <label className="flex justify-between text-xs text-slate-400 mb-2">
                 <span>Training Epochs</span>
-                <span className="text-cyan-400">{params.epochs || 50}</span>
+                <span className="text-violet-400">{params.epochs || 50}</span>
               </label>
               <input 
                 type="range" min="10" max="200" step="10" 
@@ -200,7 +200,7 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
       </div>
 
       {/* Clustering Settings */}
-      <div className="space-y-3 border-t border-slate-700/50 pt-4">
+      <div className="space-y-3 border-t border-white/10 pt-4">
         <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
           Post-Clustering
         </h4>
@@ -212,8 +212,8 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
              disabled={isProcessing}
              className={`flex-1 p-2 rounded-lg text-sm transition-all border capitalize ${
                params.clustering === mode
-                 ? "bg-cyan-500/20 border-cyan-500 text-cyan-300"
-                 : "bg-slate-800 border-slate-700 text-slate-400 hover:border-cyan-500/50"
+                 ? "bg-violet-600 border-violet-500 text-fuchsia-400"
+                 : "bg-white/5 border-white/10 text-slate-400 hover:border-violet-500"
              }`}
            >
              {mode}
@@ -222,10 +222,10 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
         </div>
         
         {params.clustering === "kmeans" && (
-           <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700/50 mt-2">
+           <div className="bg-white/5 p-3 rounded-lg border border-white/10 mt-2">
              <label className="flex justify-between text-xs text-slate-400 mb-2">
                 <span>Number of Clusters (K)</span>
-                <span className="text-cyan-400">{params.n_clusters}</span>
+                <span className="text-violet-400">{params.n_clusters}</span>
               </label>
               <input 
                 type="range" min="2" max="20" step="1" 
@@ -238,10 +238,10 @@ const AlgorithmPanel = ({ algorithmInfo, isProcessing, params, setParams }) => {
         )}
         
         {params.clustering === "dbscan" && (
-           <div className="bg-slate-800/50 p-3 rounded-lg border border-slate-700/50 mt-2">
+           <div className="bg-white/5 p-3 rounded-lg border border-white/10 mt-2">
              <label className="flex justify-between text-xs text-slate-400 mb-2">
                 <span>Epsilon (eps)</span>
-                <span className="text-cyan-400">{params.eps}</span>
+                <span className="text-violet-400">{params.eps}</span>
               </label>
               <input 
                 type="range" min="0.1" max="5.0" step="0.1" 

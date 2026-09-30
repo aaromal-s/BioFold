@@ -84,12 +84,12 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
 
   if (status === "idle" && !plotData) {
     return (
-      <div className="h-full min-h-[500px] glass-card flex flex-col items-center justify-center p-8 border-dashed border-slate-600 animate-fade-in">
-        <div className="bg-slate-800 p-6 rounded-full mb-6 relative">
+      <div className="h-full min-h-[500px] glass-card flex flex-col items-center justify-center p-8 border-dashed border-white/20 animate-fade-in">
+        <div className="bg-white/5 p-6 rounded-full mb-6 relative">
           <PresentationChartLineIcon className="w-16 h-16 text-slate-500" />
-          <div className="absolute top-0 right-0 w-4 h-4 bg-cyan-500 rounded-full border-2 border-slate-900 shadow-[0_0_10px_#06B6D4]"></div>
+          <div className="absolute top-0 right-0 w-4 h-4 bg-violet-600 rounded-full border-2 border-slate-900 shadow-[0_0_10px_#8B5CF6]"></div>
         </div>
-        <h3 className="text-xl font-medium text-slate-300 mb-2">Visualization Workspace</h3>
+        <h3 className="text-xl font-medium text-slate-200 mb-2">Visualization Workspace</h3>
         <p className="text-slate-500 text-center max-w-sm">
           Upload a dataset and configure the algorithm to generate an interactive 2D manifold projection.
         </p>
@@ -103,11 +103,11 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
         <div className="absolute inset-0 skeleton opacity-30"></div>
         <div className="relative z-10 flex flex-col items-center">
           <div className="relative w-24 h-24 mb-6 pulse-ring">
-            <div className="absolute inset-0 bg-slate-800 rounded-full flex items-center justify-center z-10">
-              <PresentationChartLineIcon className="w-10 h-10 text-cyan-400 animate-pulse" />
+            <div className="absolute inset-0 bg-white/5 rounded-full flex items-center justify-center z-10">
+              <PresentationChartLineIcon className="w-10 h-10 text-violet-400 animate-pulse" />
             </div>
           </div>
-          <h3 className="text-xl font-medium text-cyan-400 mb-2">Computing Manifold...</h3>
+          <h3 className="text-xl font-medium text-violet-400 mb-2">Computing Manifold...</h3>
           <p className="text-slate-400 text-sm">
             Applying dimensionality reduction. This may take a moment for larger datasets.
           </p>
@@ -122,9 +122,9 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
         <div className="flex flex-col xl:flex-row gap-4 flex-grow relative overflow-hidden">
           <div className="glass-card flex-grow relative p-2 min-h-[500px] lg:min-h-[600px] group">
             
-            <div className="absolute top-4 left-4 z-10 bg-slate-900/80 backdrop-blur-md px-4 py-2 rounded-lg border border-slate-700 shadow-lg pointer-events-none">
-              <h4 className="text-slate-200 font-semibold flex items-center">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 mr-2 shadow-[0_0_8px_#22D3EE]"></span>
+            <div className="absolute top-4 left-4 z-10 bg-white/5 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10 shadow-lg pointer-events-none">
+              <h4 className="text-slate-100 font-semibold flex items-center">
+                <span className="w-2 h-2 rounded-full bg-violet-500 mr-2 shadow-[0_0_8px_#A78BFA]"></span>
                 {plotData.algorithm_used.toUpperCase()} {is3D ? "3D " : "2D "}Projection
               </h4>
               <p className="text-xs text-slate-400 mt-1">
@@ -155,15 +155,15 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
           {/* Feature Importances Panel */}
           {plotData.top_features && plotData.top_features.length > 0 && (
             <div className="w-64 glass-card p-4 flex flex-col shrink-0 overflow-y-auto">
-              <h4 className="text-sm font-semibold text-slate-200 mb-3 flex items-center border-b border-slate-700 pb-2">
+              <h4 className="text-sm font-semibold text-slate-100 mb-3 flex items-center border-b border-white/10 pb-2">
                 Biomarker Discovery
               </h4>
               <p className="text-xs text-slate-400 mb-3">Top features driving these clusters (Random Forest)</p>
               <div className="space-y-2">
                 {plotData.top_features.map((ft, idx) => (
-                  <div key={idx} className="bg-slate-800/50 p-2 rounded-md border border-slate-700/50 flex flex-col">
-                    <span className="text-xs font-medium text-cyan-400 truncate" title={ft.feature}>{ft.feature}</span>
-                    <div className="w-full bg-slate-700 h-1.5 rounded-full mt-1.5">
+                  <div key={idx} className="bg-white/5 p-2 rounded-md border border-white/10 flex flex-col">
+                    <span className="text-xs font-medium text-violet-400 truncate" title={ft.feature}>{ft.feature}</span>
+                    <div className="w-full bg-white/10 h-1.5 rounded-full mt-1.5">
                       <div className="bg-emerald-400 h-1.5 rounded-full" style={{ width: `${ft.importance * 100}%` }}></div>
                     </div>
                     <span className="text-[10px] text-slate-500 mt-1 text-right">{ft.importance.toFixed(3)}</span>
@@ -178,10 +178,10 @@ const VisualizationPanel = ({ status, plotData, onDownload, onSelected }) => {
         <div className="mt-4 glass-card p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-sm font-medium text-slate-400 flex divide-x divide-slate-600">
             <span className="pr-4 tracking-wide">
-              Algorithm: <span className="text-cyan-400">{plotData.algorithm_used.toUpperCase()}</span>
+              Algorithm: <span className="text-violet-400">{plotData.algorithm_used.toUpperCase()}</span>
             </span>
             <span className="px-4 tracking-wide">
-              Data points: <span className="text-slate-200">{plotData.n_points.toLocaleString()}</span>
+              Data points: <span className="text-slate-100">{plotData.n_points.toLocaleString()}</span>
             </span>
             <span className="pl-4 tracking-wide">
               Time: <span className="text-emerald-400">{plotData.elapsed_seconds}s</span>

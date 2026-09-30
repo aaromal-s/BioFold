@@ -18,21 +18,21 @@ const HowItWorks = () => {
         isOpen ? "w-80 opacity-100 mb-4" : "w-0 h-0 opacity-0 mb-0 border-0"
       }`}>
         <div className="p-5">
-          <h3 className="font-semibold text-slate-200 mb-4 flex items-center border-b border-slate-700 pb-2">
-            <span className="bg-cyan-500/20 text-cyan-400 p-1 rounded-md mr-2">
+          <h3 className="font-semibold text-slate-100 mb-4 flex items-center border-b border-white/10 pb-2">
+            <span className="bg-violet-600 text-violet-400 p-1 rounded-md mr-2">
               <QuestionMarkCircleIcon className="w-5 h-5" />
             </span>
             Pipeline Architecture
           </h3>
           <div className="space-y-4 relative">
-            <div className="absolute top-2 bottom-2 left-[9px] w-0.5 bg-slate-700 z-0"></div>
+            <div className="absolute top-2 bottom-2 left-[9px] w-0.5 bg-white/10 z-0"></div>
             {STEPS.map((step, idx) => (
               <div key={idx} className="flex relative z-10">
-                <div className="w-5 h-5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-[10px] text-slate-400 font-bold mr-3 mt-0.5">
+                <div className="w-5 h-5 rounded-full bg-white/5 border-2 border-white/20 flex items-center justify-center text-[10px] text-slate-400 font-bold mr-3 mt-0.5">
                   {idx + 1}
                 </div>
                 <div>
-                  <h4 className="text-sm font-medium text-slate-300">{step.title}</h4>
+                  <h4 className="text-sm font-medium text-slate-200">{step.title}</h4>
                   <p className="text-xs text-slate-500 mt-1 leading-relaxed">{step.desc}</p>
                 </div>
               </div>
@@ -43,7 +43,7 @@ const HowItWorks = () => {
       
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute bottom-0 right-0 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-cyan-400 rounded-full p-3 shadow-lg transition-transform hover:scale-105 float-animation"
+        className="absolute bottom-0 right-0 bg-white/5 hover:bg-white/10 border border-white/20 text-violet-400 rounded-full p-3 shadow-lg transition-transform hover:scale-105 float-animation"
       >
         {isOpen ? <ChevronDownIcon className="w-6 h-6" /> : <QuestionMarkCircleIcon className="w-6 h-6" />}
       </button>

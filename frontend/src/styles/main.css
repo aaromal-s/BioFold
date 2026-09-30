@@ -9,7 +9,7 @@
     box-sizing: border-box;
   }
   body {
-    @apply bg-slate-900 text-slate-200 font-sans;
+    @apply bg-[#030303] text-slate-300 font-sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -18,63 +18,82 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-slate-800;
+    @apply bg-[#030303];
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-slate-600 rounded-full;
+    @apply bg-white/10 rounded-full;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-cyan-600;
+    @apply bg-violet-500/50;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply bg-slate-800 border border-slate-700 rounded-xl;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    @apply bg-white/[0.02] border border-white/[0.05] rounded-2xl;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 8px 32px -8px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .glass-card:hover {
-    border-color: rgba(6, 182, 212, 0.3);
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.08), 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 8px 40px -8px rgba(139, 92, 246, 0.15);
+    transform: translateY(-2px);
   }
 
   .btn-primary {
-    @apply bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-lg;
-    @apply transition-all duration-300 ease-in-out;
-    @apply hover:scale-105 active:scale-95;
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+    @apply bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-medium px-6 py-3 rounded-xl border border-white/10;
+    @apply transition-all duration-300 ease-out;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
   .btn-primary:hover {
-    box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+    @apply from-violet-500 to-fuchsia-500 scale-[1.02];
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
   .btn-primary:disabled {
     @apply opacity-50 cursor-not-allowed hover:scale-100;
     box-shadow: none;
   }
+  .btn-primary:active {
+    @apply scale-[0.98];
+  }
 
   .btn-secondary {
-    @apply bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium px-5 py-2.5 rounded-lg;
-    @apply border border-slate-600 hover:border-cyan-500/50;
-    @apply transition-all duration-300 ease-in-out hover:scale-105 active:scale-95;
+    @apply bg-white/5 hover:bg-white/10 text-slate-200 font-medium px-5 py-2.5 rounded-xl;
+    @apply border border-white/10 hover:border-white/20;
+    @apply transition-all duration-300 ease-out;
+  }
+  .btn-secondary:hover {
+    @apply scale-[1.02];
+  }
+  .btn-secondary:active {
+    @apply scale-[0.98];
   }
 
   .btn-outline {
-    @apply border border-cyan-500/50 hover:border-cyan-400 text-cyan-400 hover:text-cyan-300;
-    @apply px-5 py-2.5 rounded-lg font-medium;
-    @apply transition-all duration-300 ease-in-out hover:scale-105 active:scale-95;
-    @apply hover:bg-cyan-500/10;
+    @apply border border-violet-500/30 hover:border-violet-400/80 text-violet-300 hover:text-violet-200 bg-violet-500/5 hover:bg-violet-500/10;
+    @apply px-5 py-2.5 rounded-xl font-medium;
+    @apply transition-all duration-300 ease-out;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.05);
+  }
+  .btn-outline:hover {
+    @apply scale-[1.02];
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.2);
+  }
+  .btn-outline:active {
+    @apply scale-[0.98];
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #8B5CF6 100%);
+    background: linear-gradient(135deg, #A78BFA 0%, #C084FC 50%, #F472B6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .nav-link {
-    @apply text-slate-400 hover:text-cyan-400 text-sm font-medium;
+    @apply text-slate-400 hover:text-white text-sm font-medium;
     @apply transition-colors duration-200;
   }
 
@@ -83,30 +102,31 @@
   }
 
   .toast-enter {
-    animation: slideInRight 0.3s ease-out;
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .toast-exit {
-    animation: slideOutRight 0.3s ease-in;
+    animation: slideOutRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
 @layer utilities {
   .animated-bg {
-    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
-    background-size: 200% 200%;
-    animation: gradientShift 8s ease infinite;
+    background: radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(131, 24, 67, 0.15), transparent 25%);
+    background-color: #030303;
+    animation: pulseBg 15s ease-in-out infinite alternate;
   }
 
   .glow-cyan {
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
   }
 
   .glow-cyan-sm {
-    box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
   }
 
   .text-gradient-cyan {
-    background: linear-gradient(90deg, #22D3EE, #06B6D4);
+    background: linear-gradient(90deg, #A78BFA, #F472B6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -116,32 +136,34 @@
 /* Grid background pattern */
 .grid-pattern {
   background-image: 
-    linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
 }
 
 /* Particle dots background */
 .dots-pattern {
-  background-image: radial-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 0);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
   background-size: 30px 30px;
 }
 
 /* Loading skeleton */
 .skeleton {
-  background: linear-gradient(90deg, #1E293B 25%, #334155 50%, #1E293B 75%);
+  background: linear-gradient(90deg, #0a0a0a 25%, #171717 50%, #0a0a0a 75%);
   background-size: 200% 100%;
-  animation: skeletonLoading 1.5s infinite;
+  animation: skeletonLoading 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulseBg {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
 }
 
 @keyframes skeletonLoading {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }
 
 @keyframes slideInRight {
@@ -156,28 +178,32 @@
 
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(2deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(15px); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0px); }
 }
 
-/* Plotly overrides for dark theme */
+/* Plotly overrides for ultra-premium theme */
 .plotly-container .modebar {
-  background: rgba(30, 41, 59, 0.9) !important;
+  background: rgba(10, 10, 10, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255,255,255,0.05) !important;
 }
 .plotly-container .modebar-btn path {
-  fill: #94A3B8 !important;
+  fill: #A1A1AA !important;
 }
 .plotly-container .modebar-btn:hover path {
-  fill: #06B6D4 !important;
+  fill: #A78BFA !important;
 }
 
 /* Progress bar animation */
 .progress-bar {
-  animation: progressFill 0.8s ease-out forwards;
+  animation: progressFill 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  background: linear-gradient(90deg, #8B5CF6, #EC4899);
 }
 
 @keyframes progressFill {
@@ -187,7 +213,7 @@
 /* Pulse ring animation */
 @keyframes pulseRing {
   0% { transform: scale(0.8); opacity: 1; }
-  100% { transform: scale(2); opacity: 0; }
+  100% { transform: scale(2.5); opacity: 0; }
 }
 
 .pulse-ring::before {
@@ -195,6 +221,6 @@
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 2px solid rgba(6, 182, 212, 0.6);
-  animation: pulseRing 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  border: 2px solid rgba(139, 92, 246, 0.4);
+  animation: pulseRing 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }

@@ -42,7 +42,7 @@ const FileUpload = ({ onUpload, onRemove, status, progress, filename, error, onC
             <CheckCircleIcon className="w-8 h-8 text-emerald-400" />
           </div>
           <div>
-            <h3 className="text-slate-200 font-medium">{filename}</h3>
+            <h3 className="text-slate-100 font-medium">{filename}</h3>
             <p className="text-emerald-400 text-sm flex items-center mt-1">
               <span className="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
               Upload complete
@@ -82,8 +82,8 @@ const FileUpload = ({ onUpload, onRemove, status, progress, filename, error, onC
       <div
         className={`glass-card p-8 border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
           status === "uploading"
-            ? "border-cyan-500/50 bg-slate-800/80 cursor-wait"
-            : "border-slate-600 hover:border-cyan-500 hover:bg-slate-800/80"
+            ? "border-violet-500 bg-white/5 cursor-wait"
+            : "border-white/20 hover:border-violet-500 hover:bg-white/5"
         }`}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
@@ -102,32 +102,32 @@ const FileUpload = ({ onUpload, onRemove, status, progress, filename, error, onC
           <div className="w-full text-center">
             <div className="flex items-center justify-center mb-4">
               <div className="relative w-16 h-16">
-                <div className="absolute inset-0 rounded-full border-4 border-slate-700"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
-                <DocumentIcon className="w-6 h-6 text-cyan-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute inset-0 rounded-full border-4 border-white/10"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-violet-500 border-t-transparent animate-spin"></div>
+                <DocumentIcon className="w-6 h-6 text-violet-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
               </div>
             </div>
-            <p className="text-cyan-400 font-medium mb-3">Uploading {progress}%</p>
-            <div className="w-full max-w-xs mx-auto bg-slate-700 h-2 rounded-full overflow-hidden">
+            <p className="text-violet-400 font-medium mb-3">Uploading {progress}%</p>
+            <div className="w-full max-w-xs mx-auto bg-white/10 h-2 rounded-full overflow-hidden">
               <div
-                className="bg-cyan-500 h-full transition-all duration-300 ease-out"
+                className="bg-violet-600 h-full transition-all duration-300 ease-out"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
           </div>
         ) : (
           <>
-            <div className="bg-slate-700/50 p-4 rounded-2xl mb-4 group-hover:scale-110 group-hover:bg-cyan-500/10 transition-all duration-300">
-              <CloudArrowUpIcon className="w-10 h-10 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+            <div className="bg-white/10 p-4 rounded-2xl mb-4 group-hover:scale-110 group-hover:bg-violet-600 transition-all duration-300">
+              <CloudArrowUpIcon className="w-10 h-10 text-slate-400 group-hover:text-violet-400 transition-colors" />
             </div>
-            <p className="text-lg font-medium text-slate-200 mb-2 group-hover:text-cyan-300 transition-colors">
+            <p className="text-lg font-medium text-slate-100 mb-2 group-hover:text-fuchsia-400 transition-colors">
               Drag & Drop to Upload
             </p>
             <p className="text-slate-400 text-sm mb-4">or click to browse</p>
             <div className="flex space-x-2 text-xs font-medium text-slate-500">
-              <span className="bg-slate-700/50 px-2 py-1 rounded">CSV</span>
-              <span className="bg-slate-700/50 px-2 py-1 rounded">Excel</span>
-              <span className="bg-slate-700/50 px-2 py-1 rounded">Max 500MB</span>
+              <span className="bg-white/10 px-2 py-1 rounded">CSV</span>
+              <span className="bg-white/10 px-2 py-1 rounded">Excel</span>
+              <span className="bg-white/10 px-2 py-1 rounded">Max 500MB</span>
             </div>
           </>
         )}

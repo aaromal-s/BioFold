@@ -30,7 +30,7 @@ const GeneNetworkAnimation = () => {
         this.isHub = Math.random() > 0.92;
         this.baseRadius = this.isHub ? Math.random() * 3 + 3 : Math.random() * 1.5 + 1;
         this.radius = this.baseRadius;
-        this.color = this.isHub ? 'rgba(168, 85, 247, 0.8)' : 'rgba(6, 182, 212, 0.6)'; // Purple for hubs, Cyan for others
+        this.color = this.isHub ? 'rgba(168, 85, 247, 0.8)' : 'rgba(139, 92, 246, 0.6)'; // Purple for hubs, Cyan for others
         this.pulsePhase = Math.random() * Math.PI * 2;
       }
 
@@ -100,10 +100,10 @@ const GeneNetworkAnimation = () => {
             // Subtle colors based on hub status
             if (nodes[i].isHub || nodes[j].isHub) {
                 gradient.addColorStop(0, `rgba(168, 85, 247, ${opacity * 0.6})`);
-                gradient.addColorStop(1, `rgba(6, 182, 212, ${opacity * 0.6})`);
+                gradient.addColorStop(1, `rgba(139, 92, 246, ${opacity * 0.6})`);
             } else {
-                gradient.addColorStop(0, `rgba(6, 182, 212, ${opacity * 0.4})`);
-                gradient.addColorStop(1, `rgba(6, 182, 212, ${opacity * 0.4})`);
+                gradient.addColorStop(0, `rgba(139, 92, 246, ${opacity * 0.4})`);
+                gradient.addColorStop(1, `rgba(139, 92, 246, ${opacity * 0.4})`);
             }
 
             ctx.strokeStyle = gradient;

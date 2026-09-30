@@ -2,13 +2,13 @@ import React from "react";
 import { TableCellsIcon, HashtagIcon, ExclamationTriangleIcon, CalculatorIcon } from "@heroicons/react/24/outline";
 
 const DatasetInfoCard = ({ icon: Icon, label, value, colorClass }) => (
-  <div className="bg-slate-700/30 rounded-xl p-4 border border-slate-700 hover:bg-slate-700/50 transition-colors flex items-center group">
+  <div className="bg-white/10 rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-colors flex items-center group">
     <div className={`p-2 rounded-lg ${colorClass} bg-opacity-10 mr-4 group-hover:scale-110 transition-transform`}>
       <Icon className={`w-6 h-6 ${colorClass.replace('bg-', 'text-')}`} />
     </div>
     <div>
       <p className="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">{label}</p>
-      <p className="text-slate-200 text-xl font-semibold tracking-tight">{value.toLocaleString()}</p>
+      <p className="text-slate-100 text-xl font-semibold tracking-tight">{value.toLocaleString()}</p>
     </div>
   </div>
 );
@@ -18,8 +18,8 @@ const DatasetInfo = ({ info }) => {
 
   return (
     <div className="glass-card p-6 animate-fade-in mt-6">
-      <h3 className="text-lg font-medium text-slate-200 mb-4 flex items-center">
-        <span className="bg-cyan-500/20 text-cyan-400 p-1.5 rounded-lg mr-2">
+      <h3 className="text-lg font-medium text-slate-100 mb-4 flex items-center">
+        <span className="bg-violet-600 text-violet-400 p-1.5 rounded-lg mr-2">
           <TableCellsIcon className="w-5 h-5" />
         </span>
         Dataset Configuration

@@ -83,7 +83,7 @@ const Visualizer = () => {
   return (
     <div className="max-w-[1600px] mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-200">Analysis Workspace</h1>
+        <h1 className="text-3xl font-bold text-slate-100">Analysis Workspace</h1>
         <p className="text-slate-400 mt-2">Configure and run your manifold learning pipeline.</p>
       </div>
 
@@ -140,7 +140,7 @@ const Visualizer = () => {
                  className={`flex-1 text-sm font-medium py-3 rounded-xl flex items-center justify-center transition-all ${
                    saveSuccess 
                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/50" 
-                   : "bg-slate-800 border border-slate-700 text-slate-300 hover:border-purple-500/50"
+                   : "bg-white/5 border border-white/10 text-slate-200 hover:border-purple-500/50"
                  }`}
                >
                  <BookmarkIcon className="w-4 h-4 mr-2" />
